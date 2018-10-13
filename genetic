@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-import sys
+import sys, random
 from pprint import pprint
 
 from grammar import generate, interpret
+from crossover import crossover
+from mutate import mutate
 
 def evaluate(code, inputs, outputs):
     evaluated = [interpret(code)(x) for x in inputs]
@@ -17,13 +19,21 @@ def f(x):
 def genetic():
     N = 10
     x = 2
+    select_p = 0.5
+    mutate_chance = 0.1
+
     inputs = list(range(6))
     outputs = [f(x) for x in inputs]
     population = [generate() for i in range(N)]
-    results = [interpret(code)(x) for code in population]
-    pprint(results)
-    results = [evaluate(code, inputs, outputs) for code in population]
-    pprint(results)
+    #results = [interpret(code)(x) for code in population]
+    #pprint(results)
+    scores = [evaluate(code, inputs, outputs) for code in population]
+    size = len(scores)
+    selected_indices = list(sorted(range(size), key=lambda t : scores[t]))[:int(select_p * size)]
+    selected = [population[i] for i in selected_indices]
+    pprint(selected)
+    crossover(selected)
+    mutated = [mutate(code) if random.random() < mutate_chance else code for code in selected]
 
 def main(args):
     genetic()
