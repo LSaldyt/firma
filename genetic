@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+import sys
+from pprint import pprint
+
+from grammar import generate, interpret
+
+def evaluate(code, inputs, outputs):
+    evaluated = [interpret(code)(x) for x in inputs]
+    return sum(abs(x-y) for x, y in zip(evaluated, outputs))
+
+def f(x):
+    if x % 2 == 0:
+        return 1
+    else:
+        return 0
+
+def genetic():
+    N = 10
+    x = 2
+    inputs = list(range(6))
+    outputs = [f(x) for x in inputs]
+    population = [generate() for i in range(N)]
+    results = [interpret(code)(x) for code in population]
+    pprint(results)
+    results = [evaluate(code, inputs, outputs) for code in population]
+    pprint(results)
+
+def main(args):
+    genetic()
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))
