@@ -6,8 +6,11 @@ from grammar import generate, interpret
 from crossover import crossover
 from mutate import mutate
 
+ERROR_SCORE = 100000000
+
 def evaluate(code, inputs, outputs):
     evaluated = [interpret(code)(x) for x in inputs]
+    evaluated = [item if item is not None else ERROR_SCORE for item in evaluated]
     return sum(abs(x-y) for x, y in zip(evaluated, outputs))
 
 def f(x):
@@ -27,13 +30,18 @@ def genetic():
     population = [generate() for i in range(N)]
     #results = [interpret(code)(x) for code in population]
     #pprint(results)
-    scores = [evaluate(code, inputs, outputs) for code in population]
-    size = len(scores)
-    selected_indices = list(sorted(range(size), key=lambda t : scores[t]))[:int(select_p * size)]
-    selected = [population[i] for i in selected_indices]
-    pprint(selected)
-    crossover(selected)
-    mutated = [mutate(code) if random.random() < mutate_chance else code for code in selected]
+
+    while True:
+        scores = [evaluate(code, inputs, outputs) for code in population]
+        size = len(scores)
+        selected_indices = list(sorted(range(size), key=lambda t : scores[t]))[:int(select_p * size)]
+        selected = [population[i] for i in selected_indices]
+        selected_scores = [scores[i] for i in selected_indices]
+        print('Selected:')
+        pprint(selected)
+        pprint(selected_scores)
+        crossover(selected)
+        mutated = [mutate(code) if random.random() < mutate_chance else code for code in selected]
 
 def main(args):
     genetic()
