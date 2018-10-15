@@ -40,8 +40,11 @@ def genetic():
         print('Selected:')
         pprint(selected)
         pprint(selected_scores)
+        if 0.0 in selected_scores:
+            break
         crossover(selected)
         mutated = [mutate(code) if random.random() < mutate_chance else code for code in selected]
+        population = [generate() for i in range(N)]
 
 def main(args):
     genetic()

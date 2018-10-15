@@ -1,5 +1,5 @@
 from pprint import pprint
-from random import choice
+from random import choice, random, randint
 
 operators = {'+' : lambda a, b : a + b,
              '-' : lambda a, b : a - b,
@@ -8,13 +8,29 @@ operators = {'+' : lambda a, b : a + b,
              '%' : lambda a, b : a % b}
 
 def atom():
-    return choice(['x', 1, 2, 3, 4, 5])
+    if random() > 0.5:
+        return 'x'
+    else:
+        return randint(-10000, 10000)
 
 def operator():
     return choice(list(operators.keys()))
 
+grammar = {
+        'atom' : atom,
+        'operator' : operator,
+        'expression' : ['operator', 'atom', 'atom']
+}
+
+def sample(element):
+    element = grammar[element]
+    if isinstance(element, list):
+        return list(map(sample, element))
+    else:
+        return element()
+
 def generate():
-    return [operator(), atom(), atom()]
+    return sample('expression')
 
 def interpret(code):
     def f(x):
