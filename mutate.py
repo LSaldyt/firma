@@ -2,21 +2,7 @@ from pprint import pprint
 import random
 
 from grammar import sample
-
-def build_mutation_dictionary(code, prefix=tuple(), d=None):
-    if d is None:
-        d = dict()
-
-    if prefix == tuple():
-        d['total'] = code
-    else:
-        d[prefix] = code
-    tag, subcode = code
-    if isinstance(subcode, list):
-        for i, subitem in enumerate(subcode):
-            build_mutation_dictionary(subitem, prefix=prefix + (i,), d=d)
-
-    return d
+from util import build_ast_dictionary
 
 def retrieve(code, index):
     tag, code = code
@@ -38,14 +24,14 @@ def insert(code, index, item):
     return code
 
 def mutate(code):
-    print('Mutation:')
-    print('Before:')
-    print(code)
-    mutation_dict = build_mutation_dictionary(code)
+    #print('Mutation:')
+    #print('Before:')
+    #print(code)
+    mutation_dict = build_ast_dictionary(code)
     selected = random.choice(list(mutation_dict.keys()))
     tag = retrieve(code, selected)
     new = sample(tag)
     code = insert(code, selected, new)
-    print('After:')
-    print(code)
+    #print('After:')
+    #print(code)
     return code
