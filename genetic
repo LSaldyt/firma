@@ -9,9 +9,9 @@ from mutate import mutate
 ERROR_SCORE = 1000
 
 def evaluate(code, inputs, outputs):
-    print(code)
+    #print(code)
     evaluated = [interpret(code)(x) for x in inputs]
-    pprint(evaluated)
+    #pprint(evaluated)
     evaluated = [item if item is not None else ERROR_SCORE for item in evaluated]
     return sum(abs(x-y) for x, y in zip(evaluated, outputs))
 
@@ -36,9 +36,9 @@ def genetic():
         selected_indices = list(sorted(range(size), key=lambda t : scores[t]))[:int(select_p * size)]
         selected = [population[i] for i in selected_indices]
         selected_scores = [scores[i] for i in selected_indices]
-        print('Selected:')
-        pprint(selected)
-        pprint(selected_scores)
+        #print('Selected:')
+        #pprint(selected)
+        #pprint(selected_scores)
         if 0.0 in selected_scores:
             break
         crossover(selected)
