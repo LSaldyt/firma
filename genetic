@@ -36,10 +36,10 @@ def genetic():
         selected_indices = list(sorted(range(size), key=lambda t : scores[t]))[:int(select_p * size)]
         selected = [population[i] for i in selected_indices]
         selected_scores = [scores[i] for i in selected_indices]
-        #print('Selected:')
-        #pprint(selected)
-        #pprint(selected_scores)
         if 0.0 in selected_scores:
+            print('Selected:')
+            pprint(selected)
+            pprint(selected_scores)
             break
         crossover(selected)
         mutated = [mutate(code) if random.random() < mutate_chance else code for code in selected]
