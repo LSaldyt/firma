@@ -16,10 +16,16 @@ def atom():
 def operator():
     return choice(list(operators.keys()))
 
+def expression():
+    if random() > 0.5:
+        return [operator(), atom(), expression()]
+    else:
+        return [operator(), atom(), atom()]
+
 grammar = {
     'atom' : atom,
     'operator' : operator,
-    'expression' : ['operator', 'atom', 'atom']
+    'expression' : expression
 }
 
 def sample(name):
