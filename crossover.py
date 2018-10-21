@@ -21,6 +21,7 @@ def insert(code, index, item):
     else:
         for i in index[:-1]:
             subcode = subcode[i][1]
+        print(subcode)
         subcode[index[-1]] = item
     return code
 
@@ -46,12 +47,13 @@ def merge(pair):
     a = build_ast_dictionary(first)
     b = build_ast_dictionary(second)
     ast_keys = lambda d : set(((k, v[0]) for k, v in d.items()))
-    shared_keys = set.union(ast_keys(a), ast_keys(b))
+    shared_keys = set.intersection(ast_keys(a), ast_keys(b))
     if len(shared_keys) > 1:
         shared_keys.remove(('total', 'expression'))
         cross_portion = max(1, int(cross_coefficient * len(shared_keys)))
         crosses = random.sample(shared_keys, cross_portion)
         for key, _ in crosses:
+            print('Crossing ' + str(key) + ' ' + _)
             insert(base, key, retrieve(second, key))
         return base
     else:

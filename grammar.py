@@ -17,10 +17,10 @@ def operator():
     return choice(list(operators.keys()))
 
 def expression():
-    if random() > 0.5:
-        return [operator(), atom(), expression()]
+    if random() > 0.9:
+        return ['operator', 'expression', 'expression']
     else:
-        return [operator(), atom(), atom()]
+        return ['operator', 'atom', 'atom']
 
 grammar = {
     'atom' : atom,
@@ -33,7 +33,10 @@ def sample(name):
     if isinstance(element, list):
         return (name, list(map(sample, element)))
     else:
-        return (name, element())
+        generated = element()
+        if isinstance(generated, list):
+            generated = list(map(sample, generated))
+        return (name, generated)
 
 def generate():
     return sample('expression')
@@ -59,5 +62,5 @@ def interpret(code):
             else:
                 return int(code)
         except ZeroDivisionError:
-            return None
+            return 100000000
     return f
