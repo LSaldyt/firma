@@ -12,17 +12,24 @@ def retrieve(code, index):
     else:
         for i in index[:-1]:
             code = code[i][1]
-        return code[index[-1]][0]
+        return code[index[-1]]
 
 def insert(code, index, item):
-    tag, subcode = code
-    if index == 'total':
-        return item
-    else:
-        for i in index[:-1]:
-            subcode = subcode[i][1]
+    try:
+        tag, subcode = code
+        if index == 'total':
+            return item
+        else:
+            for i in index[:-1]:
+                subcode = subcode[i][1]
+            subcode[index[-1]] = item
         print(subcode)
-        subcode[index[-1]] = item
+    except TypeError:
+        print(code)
+        print(index)
+        print(item)
+        1/0
+        raise
     return code
 
 
@@ -48,6 +55,9 @@ def merge(pair):
     b = build_ast_dictionary(second)
     ast_keys = lambda d : set(((k, v[0]) for k, v in d.items()))
     shared_keys = set.intersection(ast_keys(a), ast_keys(b))
+    pprint(ast_keys(a))
+    pprint(ast_keys(b))
+    pprint(shared_keys)
     if len(shared_keys) > 1:
         shared_keys.remove(('total', 'expression'))
         cross_portion = max(1, int(cross_coefficient * len(shared_keys)))

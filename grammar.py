@@ -17,7 +17,7 @@ def operator():
     return choice(list(operators.keys()))
 
 def expression():
-    if random() > 0.9:
+    if random() > 0.7:
         return ['operator', 'expression', 'expression']
     else:
         return ['operator', 'atom', 'atom']
