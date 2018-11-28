@@ -8,3 +8,13 @@ All that is needed for a new language both a generate() and an interpret() funct
 
 This project is based on my other project, [sence](github.com/LSaldyt/sence), which has a nice descriptive [poster](https://github.com/LSaldyt/sence/blob/master/FURI_poster.pdf). A paper describing the project in more depth is planned.
 
+For example, suppose we want to learn the following function:
+```
+def f(x):
+    return 2 * x + 3 * x * x
+```
+
+The function `genetic(f)` in `genetic.py` can be used to learn it as follows:
+```
+genetic(f)
+```

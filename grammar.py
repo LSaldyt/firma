@@ -7,6 +7,9 @@ operators = {'+' : lambda a, b : a + b,
              '/' : lambda a, b : a / b,
              '%' : lambda a, b : a % b}
 
+def f():
+    return 'f'
+
 def atom():
     if random() > 0.5:
         return 'x'
@@ -17,15 +20,19 @@ def operator():
     return choice(list(operators.keys()))
 
 def expression():
-    if random() > 0.7:
+    chance = random()
+    if chance > 0.9:
         return ['operator', 'expression', 'expression']
+    #elif chance > 0.8:
+    #    return ['f', 'expression']
     else:
         return ['operator', 'atom', 'atom']
 
 grammar = {
     'atom' : atom,
     'operator' : operator,
-    'expression' : expression
+    'expression' : expression,
+    'f' : f
 }
 
 def sample(name):
@@ -55,6 +62,8 @@ def interpret(code):
                         return interpret(rest[1])(x)
                     else:
                         return interpret(rest[2])(x)
+                elif head == 'f':
+                    return f(interpret(rest)(x))
                 elif head in operators:
                     return operators[head](*map(lambda c : interpret(c)(x), rest))
             elif code == 'x':
