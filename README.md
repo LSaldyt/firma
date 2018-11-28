@@ -11,10 +11,23 @@ This project is based on my other project, [sence](github.com/LSaldyt/sence), wh
 For example, suppose we want to learn the following function:
 ```
 def f(x):
-    return 2 * x + 3 * x * x
+    return 2 * x + 1
 ```
 
 The function `genetic(f)` in `genetic.py` can be used to learn it as follows:
 ```
 genetic(f)
 ```
+
+Resulting in the potential output:
+```
+grid {firma}: python genetic.py
+Selected:
+('expression',
+ [('operator', '+'),
+  ('expression', [('operator', '%'), ('atom', 'x'), ('atom', 6)]),
+  ('expression', [('operator', '+'), ('atom', 1), ('atom', 'x')])])
+```
+
+Currently, work is being done to extend the grammar and add a simplification case.
+
