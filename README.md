@@ -1,4 +1,4 @@
-# firma
+# Firma
 Genetic algorithm defined on generic grammars for solving the program learning problem ([anti-skynet weight](https://imgs.xkcd.com/comics/genetic_algorithms.png) included)
 ![anti-skynet weight](https://imgs.xkcd.com/comics/genetic_algorithms.png)
 
